@@ -1,0 +1,63 @@
+version: "3.6"
+
+services:
+  nginx:
+    container_name: nova-nginx
+    build:
+      dockerfile: Dockerfile
+      context: nginx
+    ports:
+      - 5000:80
+    depends_on:
+      - web
+      - api
+
+  web:
+    container_name: nova-web
+    build:
+      dockerfile: Dockerfile
+      context: web
+    tty: true
+    stdin_open: true
+    ports:
+      - 5001:3000
+    volumes:
+      - ./web:/home/node/app
+
+  api:
+    container_name: nova-api
+    build:
+      dockerfile: Dockerfile
+      context: api
+    tty: true
+    stdin_open: true
+    depends_on:
+      - mongodb
+    ports:
+      - 5002:8888
+    volumes:
+      - ./api:/home/node/app
+
+  mongodb:
+    container_name: nova-mongodb
+    image: mongo:latest
+    ports:
+      - 5003:27017
+    volumes:
+      - mongodb_data:/data/db
+
+  postgresql:
+    container_name: nova-postgresql
+    image: postgres:latest
+    ports:
+      - 5004:5432
+    volumes:
+      - postgresql_data:/var/lib/postgresql/data
+    environment: 
+      - POSTGRES_USER=nova
+      - POSTGRES_PASSWORD=nova1234
+      - POSTGRES_DB=nova
+
+volumes:
+  mongodb_data:
+  postgresql_data:

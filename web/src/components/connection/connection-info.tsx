@@ -1,13 +1,14 @@
 import React from "react";
 import styled from "styled-components";
 import { IConnection } from "../../interfaces/connection.interface";
+import { theme } from "../../styles/Theme";
 
 interface ConnectionInfoProps {
   connection: IConnection;
 }
 
 const Info = styled.span`
-  color: #444;
+  color: ${theme.colors.grey};
   font-style: italic;
 `;
 

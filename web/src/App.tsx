@@ -26,12 +26,22 @@ const MenuLink = styled(Link)`
   margin-right: 8px;
 `;
 
+const StyledLayout = styled(Layout)`
+  min-height: 100vh;
+`;
+
+const StyledContent = styled(Content)`
+  padding: 8px;
+  margin: 16px auto;
+  width: 80%;
+`;
+
 function App() {
   const history = useRef(createBrowserHistory());
 
   return (
     <Router history={history.current}>
-      <Layout style={{ minHeight: "100%" }}>
+      <StyledLayout>
         <Header>
           <Row>
             <Logo>
@@ -55,7 +65,7 @@ function App() {
             </MenuLink>
           </Row>
         </Header>
-        <Content style={{ padding: "8px 8px" }}>
+        <StyledContent>
           <Switch>
             <Redirect exact from="/" to="/connections" />
             <Route exact path="/connections">
@@ -67,13 +77,13 @@ function App() {
               render={(route) => <QueryView route={route} />}
             />
           </Switch>
-        </Content>
+        </StyledContent>
         <Footer>
           <Row justify="center">
             <p>Nova by pirobits (c) 2020</p>
           </Row>
         </Footer>
-      </Layout>
+      </StyledLayout>
     </Router>
   );
 }
